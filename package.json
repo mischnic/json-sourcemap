@@ -1,0 +1,24 @@
+{
+	"private": true,
+	"name": "example",
+	"version": "0.0.0",
+	"main": "dist/index.js",
+	"scripts": {
+		"watch": "parcel watch index.js",
+		"build": "parcel build index.js",
+		"run-watch": "nodemon experiment.js",
+		"test": "mocha"
+	},
+	"devDependencies": {
+		"json-pointer": "^0.6.2",
+		"json-source-map": "^0.6.1",
+		"mocha": "^9.2.2",
+		"parcel": "^2.0.0",
+		"parcel-transformer-lezer": "^0.1.0"
+	},
+	"dependencies": {
+		"@lezer/common": "^0.15.7",
+		"@lezer/lr": "^0.15.4",
+		"json5": "^2.2.1"
+	}
+}

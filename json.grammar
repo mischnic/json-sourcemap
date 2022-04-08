@@ -1,0 +1,65 @@
+@top JsonText { value }
+@dialects { json5 }
+
+value[@isGroup=Value] { True | False | Null | Number | String | Object | Array }
+
+String { string }
+Object { "{" list<Property>? "}" }
+Array  { "[" list<ArrayValue>? "]" }
+
+Property { PropertyName ":" value }
+PropertyName { string | identifier }
+
+ArrayValue { value }
+
+@tokens {
+  True  { "true" }
+  False { "false" }
+  Null  { "null" }
+
+  Number { NumberDec | NumberFrac | NumberFracRev | NumberHex | extremes }
+  NumberDec { ($[+-])? int frac? exp?  }
+  NumberFrac[@dialect=json5] { ($[+-])? frac exp?  }
+  NumberFracRev[@dialect=json5] { ($[+-])? fracRev exp?  }
+  NumberHex[@dialect=json5] { ($[+-])? "0x" $[0-9a-fA-F]+  }
+  int  { '0' | $[1-9] std.digit* }
+  frac { '.' std.digit+ }
+  fracRev[@dialect=json5] { std.digit+ '.' }
+  exp  { $[eE] $[+\-]? std.digit+ }
+  extremes[@dialect=json5] { ($[+-])? ("Infinity" | "NaN") }
+
+  string { stringjson | stringjson5 }
+  stringjson[@dialect=json] { '"' char* '"' }
+  stringjson5[@dialect=json5] {
+    "\"" ("\\" ("'" | "\"" | escapableChar | newline) | !["\\])* "\"" |
+    "'" ("\\" ("'" | "\"" | escapableChar | newline) | !['\\])* "'"
+  }
+  escapableChar[@dialect=json5] {
+    $[\\bfnrtv0xua]
+  }
+  newline[@dialect=json5] { $[\r\n\u2028\u2029] }
+
+  char { $[\u{20}\u{21}\u{23}-\u{5b}\u{5d}-\u{10ffff}] | "\\" esc }
+  esc  { $["\\\/bfnrt] | "u" hex hex hex hex }
+  hex  { $[0-9a-fA-F] }
+
+  whitespace { $[ \n\r\t] | whitespaceAdd }
+  whitespaceAdd[@dialect=json5] { $[\u{b}\u{c}\u{a0}] }
+
+  "{" "}" "[" "]"
+
+  identifierChar[@dialect=json5] { std.asciiLetter | $[_$\u{a1}-\u{10ffff}] | "\\u" hex hex hex hex  }
+  word[@dialect=json5] { identifierChar (identifierChar | std.digit)* }
+  identifier[@dialect=json5] { word }
+
+  LineComment[@dialect=json5] { "//" ![\r\n\u2028\u2029]* }
+  BlockComment[@dialect=json5] { "/*" blockCommentRest }
+  blockCommentRest[@dialect=json5] { ![*] blockCommentRest | "*" blockCommentAfterStar }
+  blockCommentAfterStar[@dialect=json5] { "/" | "*" blockCommentAfterStar | ![/*] blockCommentRest }
+}
+
+@skip { whitespace | LineComment | BlockComment }
+// TODO trailing comma dialect
+list<item> { item ("," item)* ','? }
+
+@detectDelim
