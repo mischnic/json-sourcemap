@@ -1,4 +1,4 @@
-# json-sourcemap
+# @mischnic/json-sourcemap
 
 Generate positions for values in JSON and JSON5 strings.
 
