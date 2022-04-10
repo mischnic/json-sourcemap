@@ -1,3 +1,12 @@
+// based on https://github.com/dimfeld/lezer-json5/blob/3468e6435cfb4ec06da093378faba355cd3fd0ae/src/json5.grammar
+// MIT License
+// Copyright (c) 2021 Daniel Imfeld
+
+// based on https://github.com/lezer-parser/json/blob/fb6ce500ca64c3345eee09f8bd4566cf65ad0af0/src/json.grammar
+// MIT License
+// Copyright (C) 2020 by Marijn Haverbeke <marijnh@gmail.com>, Arun Srinivasan <rulfzid@gmail.com>, and others
+
+
 @top JsonText { value }
 @dialects { json5 }
 
@@ -62,7 +71,7 @@ ArrayValue { value }
 }
 
 @skip { whitespace | LineComment | BlockComment }
-// TODO trailing comma dialect
+// TODO trailing comma only in JSON5 dialect
 list<item> { item ("," item)* ','? }
 
 @detectDelim

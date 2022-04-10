@@ -1,4 +1,7 @@
 'use strict';
+// from https://github.com/epoberezkin/json-source-map/blob/3e5886187624d662370a52a7e5e5e0d8d4aa4c05/spec/index.js
+// MIT License
+// Copyright (c) 2017 Evgeny Poberezkin
 
 var jsonMap = require('../');
 var assert = require('assert');

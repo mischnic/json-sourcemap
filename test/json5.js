@@ -1,4 +1,7 @@
 "use strict";
+// from https://github.com/json5/json5/blob/502da86f8e8e2168e301dc5157919935082d0f7b/test/parse.js
+// MIT License
+// Copyright (c) 2012-2018 Aseem Kishore, and others.
 
 const assert = require('assert')
 const jsonMap = require('..')
