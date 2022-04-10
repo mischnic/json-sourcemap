@@ -82,4 +82,28 @@ describe("parse", function () {
       },
     });
   });
+
+  it("generates correct positions for JSON5", function () {
+    let json = String.raw`{/*x*/ foo:'1',bar:'1\
+', }`;
+    let parsed = jsonMap.parse(json, null, { useJSON5: true });
+    assert.deepStrictEqual(parsed.pointers, {
+      "": {
+        value: { line: 0, column: 0, pos: 0 },
+        valueEnd: { line: 1, column: 4, pos: 27 },
+      },
+      "/foo": {
+        key: { line: 0, column: 7, pos: 7 },
+        keyEnd: { line: 0, column: 10, pos: 10 },
+        value: { line: 0, column: 11, pos: 11 },
+        valueEnd: { line: 0, column: 14, pos: 14 },
+      },
+      "/bar": {
+        key: { line: 0, column: 15, pos: 15 },
+        keyEnd: { line: 0, column: 18, pos: 18 },
+        value: { line: 0, column: 19, pos: 19 },
+        valueEnd: { line: 1, column: 1, pos: 24 },
+      },
+    });
+  });
 });

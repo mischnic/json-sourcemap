@@ -10,8 +10,8 @@
 	"main": "dist/index.js",
 	"sideEffects": true,
 	"scripts": {
-		"watch": "parcel watch index.js",
-		"build": "parcel build index.js",
+		"watch": "parcel watch index.js --no-source-maps",
+		"build": "parcel build index.js --no-source-maps",
 		"run-watch": "nodemon experiment.js",
 		"test": "mocha"
 	},
