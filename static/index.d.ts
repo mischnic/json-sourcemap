@@ -1,19 +1,10 @@
-# json-sourcemap
-
-Generate positions for values in JSON and JSON5 strings.
-
-Inspired by and mostly API-compatible with https://github.com/epoberezkin/json-source-map.
-
-## Usage
-
-```ts
-type Position = {
+export type Position = {
 	line: number;
 	column: number;
 	pos: number;
 };
 
-type Mapping =
+export type Mapping =
 	| {
 			value: Position;
 			valueEnd: Position;
@@ -36,8 +27,3 @@ export function parse(
 	data: any;
 	pointers: Record<string, Mapping>;
 };
-```
-
-The default `tabWidth` is 4.
-
-The `valueEnd` and `keyEnd` positions are exclusive. `line`, `column` and `pos` are 0-based.
