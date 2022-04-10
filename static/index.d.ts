@@ -21,7 +21,7 @@ export function parse(
 	reviver?: (key: any, value: any) => any,
 	options?: {
 		tabWidth?: number;
-		useJSON5?: boolean;
+		dialect?: "JSON5" | "JSON";
 	}
 ): {
 	data: any;

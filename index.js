@@ -2,16 +2,17 @@ import { parser } from "./json.grammar";
 import { NodeProp } from "@lezer/common";
 import json5 from "json5";
 
-export function parse(input, reviver, { useJSON5 = false, tabWidth = 4 } = {}) {
+export function parse(input, reviver, { dialect = "json", tabWidth = 4 } = {}) {
 	// Let these parsers throw any errors about invalid input
-	let data = useJSON5
-		? json5.parse(input, reviver)
-		: JSON.parse(input, reviver);
+	let data =
+		dialect === "JSON5"
+			? json5.parse(input, reviver)
+			: JSON.parse(input, reviver);
 
 	let tree = parser
 		.configure({
 			strict: true,
-			dialect: useJSON5 ? "json5" : "json",
+			dialect: dialect === "JSON5" ? "json5" : "json",
 		})
 		.parse(input);
 

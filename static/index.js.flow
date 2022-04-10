@@ -21,7 +21,7 @@ export type Mapping =
 declare export function parse(
 	json: string,
 	reviver?: (key: any, value: any) => any,
-	options?: {| tabWidth?: number, useJSON5?: boolean |}
+	options?: {| tabWidth?: number, dialect?: "JSON5" | "JSON" |}
 ): {|
 	data: any,
 	pointers: {| [key: string]: Mapping |},
