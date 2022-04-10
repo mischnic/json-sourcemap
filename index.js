@@ -15,7 +15,7 @@ export function parse(input, reviver, { useJSON5 = false, tabWidth = 4 } = {}) {
 		})
 		.parse(input);
 
-	let pointers = {};
+	let pointers = new Map();
 	let currentPath = [""];
 
 	tree.iterate({
@@ -62,14 +62,14 @@ export function parse(input, reviver, { useJSON5 = false, tabWidth = 4 } = {}) {
 
 	return {
 		data,
-		pointers,
+		pointers: Object.fromEntries(pointers),
 	};
 }
 
 function mapMerge(map, key, data) {
-	let value = map[key];
+	let value = map.get(key);
 	value = { ...value, ...data };
-	map[key] = value;
+	map.set(key, value);
 }
 
 function posToLineColumn(input, pos, tabWidth) {
@@ -102,10 +102,17 @@ function countColumn(str, start, end, tabWidth) {
 	return count;
 }
 
+const ESCAPE_REGEX = /[~/]/g;
+
 function toJsonPointer(path) {
-	return path
-		.map((e) =>
-			String(e).replace(/[~/]/g, (v) => (v === "~" ? "~0" : "~1"))
-		)
-		.join("/");
+	let str = "";
+	for (let e of path) {
+		if (typeof e === "string") {
+			str +=
+				e.replace(ESCAPE_REGEX, (v) => (v === "~" ? "~0" : "~1")) + "/";
+		} else {
+			str += String(e) + "/";
+		}
+	}
+	return str.slice(0, -1);
 }
