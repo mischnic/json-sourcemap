@@ -48,4 +48,38 @@ describe("parse", function () {
       },
     });
   });
+
+  it("should support whitespace with tabs and custom tabWidth", function () {
+    let json = `{
+\t"foo": [
+\t\t{
+\t\t\t"bar": true
+\t\t}
+\t]
+}`;
+
+    let parsed = jsonMap.parse(json, null, { tabWidth: 2 });
+    assert.deepStrictEqual(parsed.pointers, {
+      "": {
+        value: { line: 0, column: 0, pos: 0 },
+        valueEnd: { line: 6, column: 1, pos: 39 },
+      },
+      "/foo": {
+        key: { line: 1, column: 2, pos: 3 },
+        keyEnd: { line: 1, column: 7, pos: 8 },
+        value: { line: 1, column: 9, pos: 10 },
+        valueEnd: { line: 5, column: 3, pos: 37 },
+      },
+      "/foo/0": {
+        value: { line: 2, column: 4, pos: 14 },
+        valueEnd: { line: 4, column: 5, pos: 34 },
+      },
+      "/foo/0/bar": {
+        key: { line: 3, column: 6, pos: 19 },
+        keyEnd: { line: 3, column: 11, pos: 24 },
+        value: { line: 3, column: 13, pos: 26 },
+        valueEnd: { line: 3, column: 17, pos: 30 },
+      },
+    });
+  });
 });
