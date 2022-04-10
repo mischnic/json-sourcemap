@@ -1,8 +1,8 @@
 {
-	"private": true,
-	"name": "example",
+	"name": "json-sourcemap",
 	"version": "0.0.0",
 	"main": "dist/index.js",
+	"sideEffects": true,
 	"scripts": {
 		"watch": "parcel watch index.js",
 		"build": "parcel build index.js",
@@ -14,7 +14,7 @@
 		"json-source-map": "^0.6.1",
 		"mocha": "^9.2.2",
 		"parcel": "^2.0.0",
-		"parcel-transformer-lezer": "^0.1.0"
+		"parcel-transformer-lezer": "^0.1.2"
 	},
 	"dependencies": {
 		"@lezer/common": "^0.15.7",

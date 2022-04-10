@@ -269,53 +269,53 @@ describe('parse(text)', () => {
     })
 })
 
-// it('parse(text, reviver)', () => {
-//     assert.deepStrictEqual(
-//         JSON5.parse('{a:1,b:2}', (k, v) => (k === 'a') ? 'revived' : v),
-//         {a: 'revived', b: 2},
-//         'modifies property values'
-//     )
+it('parse(text, reviver)', () => {
+    assert.deepStrictEqual(
+        JSON5.parse('{a:1,b:2}', (k, v) => (k === 'a') ? 'revived' : v),
+        {a: 'revived', b: 2},
+        'modifies property values'
+    )
 
-//     assert.deepStrictEqual(
-//         JSON5.parse('{a:{b:2}}', (k, v) => (k === 'b') ? 'revived' : v),
-//         {a: {b: 'revived'}},
-//         'modifies nested object property values'
-//     )
+    assert.deepStrictEqual(
+        JSON5.parse('{a:{b:2}}', (k, v) => (k === 'b') ? 'revived' : v),
+        {a: {b: 'revived'}},
+        'modifies nested object property values'
+    )
 
-//     assert.deepStrictEqual(
-//         JSON5.parse('{a:1,b:2}', (k, v) => (k === 'a') ? undefined : v),
-//         {b: 2},
-//         'deletes property values'
-//     )
+    assert.deepStrictEqual(
+        JSON5.parse('{a:1,b:2}', (k, v) => (k === 'a') ? undefined : v),
+        {b: 2},
+        'deletes property values'
+    )
 
-//     assert.deepStrictEqual(
-//         JSON5.parse('[0,1,2]', (k, v) => (k === '1') ? 'revived' : v),
-//         [0, 'revived', 2],
-//         'modifies array values'
-//     )
+    assert.deepStrictEqual(
+        JSON5.parse('[0,1,2]', (k, v) => (k === '1') ? 'revived' : v),
+        [0, 'revived', 2],
+        'modifies array values'
+    )
 
-//     assert.deepStrictEqual(
-//         JSON5.parse('[0,[1,2,3]]', (k, v) => (k === '2') ? 'revived' : v),
-//         [0, [1, 2, 'revived']],
-//         'modifies nested array values'
-//     )
+    assert.deepStrictEqual(
+        JSON5.parse('[0,[1,2,3]]', (k, v) => (k === '2') ? 'revived' : v),
+        [0, [1, 2, 'revived']],
+        'modifies nested array values'
+    )
 
-//     assert.deepStrictEqual(
-//         JSON5.parse('[0,1,2]', (k, v) => (k === '1') ? undefined : v),
-//         [0, , 2], // eslint-disable-line no-sparse-arrays
-//         'deletes array values'
-//     )
+    assert.deepStrictEqual(
+        JSON5.parse('[0,1,2]', (k, v) => (k === '1') ? undefined : v),
+        [0, , 2], // eslint-disable-line no-sparse-arrays
+        'deletes array values'
+    )
 
-//     assert.equal(
-//         JSON5.parse('1', (k, v) => (k === '') ? 'revived' : v),
-//         'revived',
-//         'modifies the root value'
-//     )
+    assert.equal(
+        JSON5.parse('1', (k, v) => (k === '') ? 'revived' : v),
+        'revived',
+        'modifies the root value'
+    )
 
-//     assert.deepStrictEqual(
-//         JSON5.parse('{a:{b:2}}', function (k, v) { return (k === 'b' && this.b) ? 'revived' : v }),
-//         {a: {b: 'revived'}},
-//         'sets `this` to the parent value'
-//     )
+    assert.deepStrictEqual(
+        JSON5.parse('{a:{b:2}}', function (k, v) { return (k === 'b' && this.b) ? 'revived' : v }),
+        {a: {b: 'revived'}},
+        'sets `this` to the parent value'
+    )
 
-// })
+})

@@ -27,4 +27,25 @@ describe("parse", function () {
       },
     });
   });
+
+  it("works with different line endings: nl", function () {
+    let json = `{\n}`;
+    let parsed = jsonMap.parse(json);
+    assert.deepStrictEqual(parsed.pointers, {
+      "": {
+        value: { line: 0, column: 0, pos: 0 },
+        valueEnd: { line: 1, column: 1, pos: 3 },
+      },
+    });
+  });
+  it("works with different line endings: cr nl", function () {
+    let json = `{\r\n}`;
+    let parsed = jsonMap.parse(json);
+    assert.deepStrictEqual(parsed.pointers, {
+      "": {
+        value: { line: 0, column: 0, pos: 0 },
+        valueEnd: { line: 1, column: 1, pos: 4 },
+      },
+    });
+  });
 });

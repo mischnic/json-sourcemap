@@ -1464,10 +1464,10 @@ p-locate@^5.0.0:
   dependencies:
     p-limit "^3.0.2"
 
-parcel-transformer-lezer@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/parcel-transformer-lezer/-/parcel-transformer-lezer-0.1.0.tgz#d0bc6ad1638f45e2167e1352e22c57928fdc191d"
-  integrity sha512-qQ3oqEoKLkdevWQWyUCT1OGZ0mY797sd8SdKsCzm5UCpLY6z7LSTC06Y800RB3Fm+kgMu7BVy29fgelKBzqYbQ==
+parcel-transformer-lezer@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/parcel-transformer-lezer/-/parcel-transformer-lezer-0.1.2.tgz#579f87b7fea70df093f4db154df35e1f0a9b2b39"
+  integrity sha512-SipGnIBlGstNbQr64sjz4PV6g99SiqC5YOjSUoiNznYNUqn4PFSXioLdMTe9L9mF8ZJPROkpQwDnET4x5yPO2Q==
   dependencies:
     "@lezer/generator" "^0.15.2"
     "@parcel/diagnostic" "^2.0.0"

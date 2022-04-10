@@ -44,11 +44,14 @@ ArrayValue { value }
   hex  { $[0-9a-fA-F] }
 
   whitespace { $[ \n\r\t] | whitespaceAdd }
-  whitespaceAdd[@dialect=json5] { $[\u{b}\u{c}\u{a0}] }
+  whitespaceAdd[@dialect=json5] { $[\u{b}\u{c}\u{a0}\u{feff}\u{2028}\u{2029}\u{2003}] }
 
   "{" "}" "[" "]"
 
-  identifierChar[@dialect=json5] { std.asciiLetter | $[_$\u{a1}-\u{10ffff}] | "\\u" hex hex hex hex  }
+  identifierChar[@dialect=json5] { std.asciiLetter
+    | $[_$\u{a1}-\u{2002}\u{2004}-\u{2027}\u{2030}-\u{fefe}\u{ff00}-\u{10ffff}]
+    | "\\u" hex hex hex hex
+  }
   word[@dialect=json5] { identifierChar (identifierChar | std.digit)* }
   identifier[@dialect=json5] { word }
 

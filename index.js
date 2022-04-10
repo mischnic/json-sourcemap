@@ -3,6 +3,7 @@ import { NodeProp } from "@lezer/common";
 import json5 from "json5";
 
 export function parse(input, reviver, { useJSON5 = false, tabWidth = 4 } = {}) {
+	// Let these parsers throw any errors about invalid input
 	let data = useJSON5
 		? json5.parse(input, reviver)
 		: JSON.parse(input, reviver);
@@ -13,18 +14,27 @@ export function parse(input, reviver, { useJSON5 = false, tabWidth = 4 } = {}) {
 			dialect: useJSON5 ? "json5" : "json",
 		})
 		.parse(input);
-	let tab = " ".repeat(tabWidth);
 
 	let pointers = {};
 	let currentPath = [""];
 
 	tree.iterate({
 		enter(type, from, to, get) {
+			// if (type.isError) {
+			// 	let fromPos = posToLineColumn(input, from, tabWidth);
+			// 	let error = new SyntaxError(
+			// 		`Failed to parse (${fromPos.line}:${fromPos.column})`
+			// 	);
+			// 	error.lineNumber = fromPos.line;
+			// 	error.columnNumber = fromPos.column;
+			// 	throw error;
+			// }
+
 			let group = type.prop(NodeProp.group);
 			if (group?.includes("Value")) {
 				mapMerge(pointers, toJsonPointer(currentPath), {
-					value: posToLineColumn(input, from, tab),
-					valueEnd: posToLineColumn(input, to, tab),
+					value: posToLineColumn(input, from, tabWidth),
+					valueEnd: posToLineColumn(input, to, tabWidth),
 				});
 			}
 
@@ -34,8 +44,8 @@ export function parse(input, reviver, { useJSON5 = false, tabWidth = 4 } = {}) {
 				let quoted = name[0] === `'` || name[0] == `"`;
 				currentPath.push(quoted ? name.slice(1, -1) : name);
 				mapMerge(pointers, toJsonPointer(currentPath), {
-					key: posToLineColumn(input, from, tab),
-					keyEnd: posToLineColumn(input, to, tab),
+					key: posToLineColumn(input, from, tabWidth),
+					keyEnd: posToLineColumn(input, to, tabWidth),
 				});
 			} else if (type.name === "Array") {
 				currentPath.push(0);
@@ -62,18 +72,34 @@ function mapMerge(map, key, data) {
 	map[key] = value;
 }
 
-function posToLineColumn(input, pos, tab) {
-	let before = input.slice(0, pos);
-	let line = before.match(/\n/g)?.length ?? 0;
-	let lineStart = before.lastIndexOf("\n") + 1;
-	let thisLine = input.slice(lineStart, pos);
-	let column = thisLine.replace(/\t/g, tab).length;
+function posToLineColumn(input, pos, tabWidth) {
+	let line = countNewLines(input, pos);
+	let lineStart = input.lastIndexOf("\n", pos - 1) + 1;
+	let column = countColumn(input, lineStart, pos, tabWidth);
 
 	return {
 		line,
 		column,
 		pos,
 	};
+}
+
+function countNewLines(str, end) {
+	let count = 0;
+	for (let i = 0; i < end; i++) {
+		if (str[i] === "\n") {
+			count++;
+		}
+	}
+	return count;
+}
+
+function countColumn(str, start, end, tabWidth) {
+	let count = 0;
+	for (let i = start; i < end; i++) {
+		count += str[i] === "\t" ? tabWidth : 1;
+	}
+	return count;
 }
 
 function toJsonPointer(path) {
