@@ -86,7 +86,7 @@ describe("parse", function () {
   it("generates correct positions for JSON5", function () {
     let json = String.raw`{/*x*/ foo:'1',bar:'1\
 ', }`;
-    let parsed = jsonMap.parse(json, null, { useJSON5: true });
+    let parsed = jsonMap.parse(json, null, { dialect: "JSON5" });
     assert.deepStrictEqual(parsed.pointers, {
       "": {
         value: { line: 0, column: 0, pos: 0 },

@@ -7,7 +7,7 @@ const assert = require('assert')
 const jsonMap = require('..')
 const JSON5 = {
 	parse(v, revivier) {
-		return jsonMap.parse(v, revivier, {useJSON5: true}).data;
+		return jsonMap.parse(v, revivier, {"dialect": "JSON5"}).data;
 	}
 }
 
