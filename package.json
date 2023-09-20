@@ -13,8 +13,8 @@
 	"main": "dist/index.js",
 	"sideEffects": true,
 	"scripts": {
-		"watch": "parcel watch index.js --no-source-maps",
-		"build": "parcel build index.js --no-source-maps",
+		"watch": "parcel watch index.ts --no-source-maps",
+		"build": "parcel build index.ts --no-source-maps",
 		"run-watch": "nodemon experiment.js",
 		"test": "mocha"
 	},
@@ -24,11 +24,12 @@
 		"mocha": "^10.0.0",
 		"parcel": "2.4.1",
 		"parcel-reporter-static-files-copy": "^1.0.0",
-		"parcel-transformer-lezer": "^0.1.0"
+		"parcel-transformer-lezer": "^0.2.0",
+		"typescript": "^5.2.2"
 	},
 	"dependencies": {
-		"@lezer/common": "^0.15.7",
-		"@lezer/lr": "^0.15.4",
+		"@lezer/common": "^1.0.0",
+		"@lezer/lr": "^1.0.0",
 		"json5": "^2.2.1"
 	},
 	"files": [
