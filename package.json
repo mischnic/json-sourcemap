@@ -22,9 +22,9 @@
 		"json-pointer": "^0.6.2",
 		"json-source-map": "^0.6.1",
 		"mocha": "^10.0.0",
-		"parcel": "~2.8.0",
+		"parcel": "^2.9.3",
 		"parcel-reporter-static-files-copy": "^1.0.0",
-		"parcel-transformer-lezer": "^0.2.0",
+		"parcel-transformer-lezer": "^0.2.1",
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
