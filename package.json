@@ -1,6 +1,6 @@
 {
 	"name": "@mischnic/json-sourcemap",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "MIT",
 	"description": "Generate positions for values in JSON and JSON5 strings",
 	"repository": {
